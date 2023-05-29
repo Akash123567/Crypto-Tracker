@@ -160,10 +160,10 @@ export default function UserSidebar() {
                   <span style={{ fontSize: 15, textShadow: "0 0 5px black" }}>
                     Watchlist
                   </span>
-                  {coins.map((coin) => {
+                  {coins.map((coin, index) => {
                     if (watchlist.includes(coin.id))
                       return (
-                        <div className={classes.coin}>
+                        <div className={classes.coin} key={coin.id}> {/* Added key prop */}
                           <span>{coin.name}</span>
                           <span style={{ display: "flex", gap: 8 }}>
                             {symbol}{" "}
@@ -176,7 +176,7 @@ export default function UserSidebar() {
                           </span>
                         </div>
                       );
-                    else return <></>;
+                    else return null; {/* Replaced <></> with null */}
                   })}
                 </div>
               </div>
