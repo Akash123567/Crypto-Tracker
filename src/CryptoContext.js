@@ -2956,23 +2956,55 @@ const CryptoContext = ({ children }) => {
   }, [currency]);
 
   const notificationDataCreator = async (watchlist) => {
-    if(watchlist.length === 0 || coins.length===0) return;
+    if (watchlist.length === 0 || coins.length === 0) return;
+
     const ids = watchlist.join(',');
     const { data } = await axios.get(priceChange24h(ids, currency));
-    const notificationData = watchlist.map((coin) => {
+
+    const notificationData = []
+    watchlist.forEach((coin) => {
       const coinData = coins.find((c) => c.id === coin);
-      if (Object.values(data[coinData.id])[1]> 1) {
-        return {
+      const percentageChange = Object.values(data[coinData.id])[1];
+
+      if (percentageChange > 1 || percentageChange < -1) {
+        const priceIndicator = percentageChange > 1 ? `increased` : `decreased`;
+        const arrowColor = percentageChange > 1 ? '#4CAF50' : '#FF5722';
+
+        const arrow = (
+          <span
+            style={{
+              color: arrowColor,
+              fontSize: '1.5em',
+              verticalAlign: 'middle',
+              marginRight: '0.2em',
+            }}
+          >
+            {percentageChange > 1 ? '▲' : '▼'}
+          </span>
+        );
+
+        notificationData.push( {
+          id: coinData.id,
           image: coinData.image,
-          message: `${coinData.name} price increased by ${parseFloat(Object.values(data[coinData.id])[1]).toFixed(2)}%`,
+          message: (
+            <p style={{ display: 'flex', alignItems: 'center', margin: 0 }}>
+              {arrow} {coinData.name} price {priceIndicator} by {'   '}
+              <span style={{ fontWeight: 'bold', marginLeft: '3px' }} >
+                {parseFloat(percentageChange).toFixed(2)}%
+              </span>
+            </p>
+          ),
           detailPage: `/coins/${coinData.id}`,
-          receivedTime:'2h ago'
-        }
+          receivedTime: '2h ago',
+        });
       }
-      return {}
-    })
+    });
+
+    console.log('notificationdata', notificationData);
     return notificationData;
-  }
+  };
+
+
 
   useEffect(() => {
     const fetchNotifications = async () => {
@@ -2980,7 +3012,7 @@ const CryptoContext = ({ children }) => {
       setNotifications(notificationData);
     }
     fetchNotifications();
-  }, [watchlist,coins]);
+  }, [watchlist, coins]);
 
   return (
     <Crypto.Provider

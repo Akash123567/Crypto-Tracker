@@ -6,17 +6,19 @@ import {
   Select,
   Toolbar,
   Typography,
+  IconButton
 } from "@material-ui/core";
-import { createTheme, makeStyles, ThemeProvider, spacing } from "@material-ui/core/styles";
+import { createTheme, makeStyles, ThemeProvider } from "@material-ui/core/styles";
 import { useHistory } from "react-router-dom";
 import { CryptoState } from "../CryptoContext";
 import AuthModal from "./Authentication/AuthModal";
 import UserSidebar from "./Authentication/UserSidebar";
 import StackedBarChartIcon from "@mui/icons-material/StackedBarChart";
 import Notifications from "react-notifications-menu";
-import whiteBellIcon from '../assets/notifications_white_24dp.svg';
-import './customNotifications.css'
-import './customNotificationCard.css'
+import whiteBellIcon from "../assets/notifications_white_24dp.svg";
+import NewsIcon from "@mui/icons-material/Article";
+import './customNotifications.css';
+import './customNotificationCard.css';
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -53,6 +55,11 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "red",
     fontWeight: "400",
     color: "white",
+  },
+  newsIcon:{
+    paddingBottom:'20px',
+    color:'white',
+    size:'medium'
   }
 }));
 
@@ -67,8 +74,12 @@ const darkTheme = createTheme({
 
 function Header() {
   const classes = useStyles();
-  const { currency, setCurrency, user, notifications, setNotifications } = CryptoState(); 
+  const { currency, setCurrency, user, notifications, watchlist } = CryptoState();
   const history = useHistory();
+
+  const handleNewsIconClick = () => {
+    history.push("/news");
+  };
 
   return (
     <ThemeProvider theme={darkTheme}>
@@ -97,10 +108,12 @@ function Header() {
                 <MenuItem value={"INR"}>INR</MenuItem>
               </Select>
               <Notifications data={notifications} icon={whiteBellIcon} classNamePrefix={'crypto'} />
+              <IconButton className={classes.newsIcon} onClick={handleNewsIconClick}>
+                <NewsIcon/>
+              </IconButton>
               {user ? <UserSidebar /> : <AuthModal />}
             </div>
           </Toolbar>
-
         </Container>
       </AppBar>
     </ThemeProvider>
