@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom"
 import {
   AppBar,
   Container,
@@ -21,6 +22,16 @@ import './customNotifications.css';
 import './customNotificationCard.css';
 
 const useStyles = makeStyles((theme) => ({
+  link: {
+    color: "gold",
+    fontFamily: "Montserrat",
+    fontWeight: "bold",
+    marginLeft: theme.spacing(4),
+    marginRight: theme.spacing(2),
+    textDecoration: "none",
+    cursor: "pointer",
+  },
+
   title: {
     flex: 1,
     color: "gold",
@@ -37,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
   flexContainer: {
     display: "flex",
     alignItems: "center",
-    gap: theme.spacing(2),
+    gap: theme.spacing(4),
   },
   customCount: {
     height: "17px",
@@ -95,6 +106,10 @@ function Header() {
             >
               Crypto Tracker
             </Typography>
+
+            <Link to= "compare" className={classes.link}>
+              compare
+            </Link>
             <div className={classes.flexContainer}>
               <Select
                 variant="outlined"

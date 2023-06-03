@@ -12,20 +12,21 @@ import SelectButton from "./SelectButton";
 import { chartDays } from "../config/data";
 import { CryptoState } from "../CryptoContext";
 
-const CoinInfo = ({ coin }) => {
+const CoinInfoNew = ({ coin }) => {
   const [historicData, setHistoricData] = useState();
   const [days, setDays] = useState(1);
   const { currency } = CryptoState();
 
   const useStyles = makeStyles((theme) => ({
     container: {
-      width: "75%",
+      width: "100%",
       display: "flex",
       flexDirection: "column",
       alignItems: "center",
       justifyContent: "center",
       marginTop: 25,
       padding: 40,
+      height:"100%",
       [theme.breakpoints.down("md")]: {
         width: "100%",
         marginTop: 0,
@@ -124,4 +125,4 @@ const CoinInfo = ({ coin }) => {
   );
 };
 
-export default CoinInfo;
+export default CoinInfoNew;

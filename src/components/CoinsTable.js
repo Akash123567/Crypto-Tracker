@@ -75,7 +75,7 @@ export default function CoinsTable() {
           variant="h4"
           style={{ margin: 18, fontFamily: "Montserrat" }}
         >
-          Cryptocurrency Prices by Market Cap
+          Cryptocurrency Prices by Market Cap 
         </Typography>
         <TextField
           label="Search For a Crypto Currency.."
@@ -90,7 +90,7 @@ export default function CoinsTable() {
             <Table aria-label="simple table">
               <TableHead style={{ backgroundColor: "#EEBC1D" }}>
                 <TableRow>
-                  {["Coin", "Price", "24h Change", "Market Cap"].map((head) => (
+                  {["Coin", "Price" , "24h Change", "Market Cap"].map((head) => (
                     <TableCell
                       style={{
                         color: "black",
